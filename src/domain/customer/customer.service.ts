@@ -1,11 +1,22 @@
-import { Injectable } from '@nestjs/common';
-import { CustomerDto } from 'src/application/customer';
-import { SUCCESSFUL_STATUS_CODE } from 'src/application/utils/status';
+import { Inject, Injectable } from '@nestjs/common';
+import {
+  CUSTOMER_DB_REPOSITORY,
+  CustomerDBRepository,
+  CustomerDto,
+} from '../../application/customer';
 
 @Injectable()
 export class CustomerService {
-  async createCustomer(customer: CustomerDto): Promise<number> {
+  constructor(
+    @Inject(CUSTOMER_DB_REPOSITORY)
+    private readonly _customerDBRepository: CustomerDBRepository,
+  ) {}
+
+  async createCustomer(
+    customer: CustomerDto,
+    trackingId: string,
+  ): Promise<number> {
     console.log('create customer', customer);
-    return SUCCESSFUL_STATUS_CODE.CUSTOMER_CREATED;
+    return this._customerDBRepository.createCustomer(customer, trackingId);
   }
 }

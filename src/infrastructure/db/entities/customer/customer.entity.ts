@@ -12,8 +12,8 @@ export enum Gender {
   OTHER = 'other',
 }
 
-@Entity()
-export class Customer {
+@Entity({ name: 'customer' })
+export class CustomerEntity {
   @PrimaryColumn({ name: 'id' })
   id?: string;
 
@@ -41,7 +41,7 @@ export class Customer {
   @Column({ name: 'address', nullable: true, type: 'jsonb' })
   address?: object;
 
-  @Column({ name: 'metada', nullable: true, type: 'jsonb' })
+  @Column({ name: 'metadata', nullable: true, type: 'jsonb' })
   metadata?: object;
 
   @CreateDateColumn({

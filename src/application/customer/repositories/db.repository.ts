@@ -1,8 +1,12 @@
 import { CustomerDto } from '../dtos/customer.dto';
 
-export const DB_CUSTOMER_SERVICE = 'DB_CUSTOMER_SERVICE';
+export const CUSTOMER_DB_REPOSITORY = 'CUSTOMER_DB_REPOSITORY';
 
-export interface dbCustomerService {
+export interface CustomerDBRepository {
   getCustomerById(id: string, trackingId: string): Promise<CustomerDto>;
-  createCustomer(customer: CustomerDto, trackingId: string): Promise<any>;
+
+  /**
+   * @returns {number} The number response is the code bussiness.
+   */
+  createCustomer(customer: CustomerDto, trackingId: string): Promise<number>;
 }
