@@ -16,7 +16,12 @@ export class CustomerService {
     customer: CustomerDto,
     trackingId: string,
   ): Promise<number> {
-    console.log('create customer', customer);
-    return this._customerDBRepository.createCustomer(customer, trackingId);
+    console.log(`create customer ${trackingId}`, customer);
+    return this._customerDBRepository.createCustomer(customer);
+  }
+
+  async getCustomerById(id: string, trackingId: string): Promise<CustomerDto> {
+    console.log(`get customer ${trackingId}`);
+    return this._customerDBRepository.getCustomerById(id);
   }
 }

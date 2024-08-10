@@ -3,10 +3,10 @@ import { CustomerDto } from '../dtos/customer.dto';
 export const CUSTOMER_DB_REPOSITORY = 'CUSTOMER_DB_REPOSITORY';
 
 export interface CustomerDBRepository {
-  getCustomerById(id: string, trackingId: string): Promise<CustomerDto>;
+  getCustomerById(id: string): Promise<CustomerDto>;
 
   /**
    * @returns {number} The number response is the code bussiness.
    */
-  createCustomer(customer: CustomerDto, trackingId: string): Promise<number>;
+  createCustomer(customer: CustomerDto): Promise<number>;
 }

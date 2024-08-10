@@ -19,8 +19,10 @@ export class CustomerServiceDB implements OnModuleInit, CustomerDBRepository {
     this.customerRepository = this._dbService.getRepository(CustomerEntity);
   }
 
-  getCustomerById(id: string, trackingId: string): Promise<CustomerDto> {
-    throw new Error(`Method not implemented. ${trackingId} ${id}`);
+  getCustomerById(id: string): Promise<CustomerDto> {
+    return this.customerRepository.findOne({
+      where: { id },
+    });
   }
 
   async createCustomer(customer: CustomerDto): Promise<number> {

@@ -1,4 +1,5 @@
 import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { v4 as uuidv4 } from 'uuid';
 import { CustomerService } from '../../domain/customer/customer.service';
 import { handleResponse } from '../utils';
 import { CustomerDto, GenericResponse } from './dtos/customer.dto';
@@ -9,17 +10,19 @@ export class CustomerController {
 
   @Get(':customerId')
   async getCustomerByID(@Param('customerId') customerId: string) {
-    console.log('Customer ID', customerId);
+    const trackingID = uuidv4();
+    return this._customerService.getCustomerById(customerId, trackingID);
   }
 
   @Post()
   async createCustomer(
     @Body() customer: CustomerDto,
   ): Promise<GenericResponse> {
+    const trackingID = uuidv4();
     const code = await this._customerService.createCustomer(
       customer,
-      'anyString',
+      trackingID,
     );
-    return handleResponse(code, 'any-trackingID');
+    return handleResponse(code, trackingID);
   }
 }
