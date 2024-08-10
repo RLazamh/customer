@@ -1,14 +1,11 @@
 import { Injectable, OnModuleInit } from '@nestjs/common';
+import { configMigrate } from '../../config/db.orm';
+import { DatabaseService } from '../../db.service';
 
 @Injectable()
 export class CustomerDBService implements OnModuleInit {
-  // private customerRepository: Repository<Customer>;
-  // constructor(private dbService: DatabaseService) {}
+  constructor(private dbService: DatabaseService) {}
   async onModuleInit() {
-    // await this.dbService.init(configMigrate, process.env.POSTGRES_DB);
-    // this.customerRepository = this.dbService.getRepository(Customer);
+    await this.dbService.init(configMigrate);
   }
-  // async findCustomerById(id: string): Promise<Customer> {
-  //   return this.customerRepository.findOne({ id });
-  // }
 }

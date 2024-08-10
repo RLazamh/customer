@@ -1,7 +1,14 @@
 import { Module } from '@nestjs/common';
+import { ConfigModule } from '@nestjs/config';
+import { DatabaseModule } from './infrastructure/db/db.module';
 
 @Module({
-  imports: [],
+  imports: [
+    DatabaseModule,
+    ConfigModule.forRoot({
+      isGlobal: true,
+    }),
+  ],
   controllers: [],
   providers: [],
 })
