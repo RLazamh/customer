@@ -5,6 +5,7 @@ import {
   IsEnum,
   IsBoolean,
   IsOptional,
+  IsNumber,
 } from 'class-validator';
 
 export enum Gender {
@@ -13,7 +14,7 @@ export enum Gender {
   OTHER = 'other',
 }
 
-export class CustomerRequest {
+export class CustomerDto {
   @ApiProperty({
     description: 'Customer ID',
     required: false,
@@ -86,4 +87,26 @@ export class CustomerRequest {
   })
   @IsOptional()
   metadata?: object;
+}
+
+export class GenericResponse {
+  @ApiProperty({
+    description: 'Status code',
+  })
+  @IsNumber()
+  statusCode: number;
+
+  @ApiProperty({
+    description: 'Bussiness code',
+  })
+  @IsNumber()
+  bussinessCode: number;
+
+  @ApiProperty({
+    description: 'Message response',
+    required: false,
+  })
+  @IsString()
+  @IsOptional()
+  message?: string;
 }

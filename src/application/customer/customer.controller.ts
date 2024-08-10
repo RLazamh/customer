@@ -1,6 +1,7 @@
 import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { CustomerService } from '../../domain/customer';
-import { CustomerRequest } from './dtos/customer.dto';
+import { handleResponse } from '../utils/success.responses';
+import { CustomerDto, GenericResponse } from './dtos/customer.dto';
 
 @Controller('customer')
 export class CustomerController {
@@ -12,7 +13,10 @@ export class CustomerController {
   }
 
   @Post()
-  async createCustomer(@Body() customer: CustomerRequest) {
-    this._customerService.createCustomer(customer);
+  async createCustomer(
+    @Body() customer: CustomerDto,
+  ): Promise<GenericResponse> {
+    const code = await this._customerService.createCustomer(customer);
+    return handleResponse(code, 'any-trackingID');
   }
 }
