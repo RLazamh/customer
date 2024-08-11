@@ -2,22 +2,28 @@ import { Inject, Injectable } from '@nestjs/common';
 import {
   CUSTOMER_DB_REPOSITORY,
   CustomerDBRepository,
-  CustomerDto,
-} from '../../application/customer';
+} from './repositories/db.repository';
+import { CustomerDto } from './dtos/customer.dto';
 
 @Injectable()
-export class CustomerServiceCrud {
+export class CustomerHandlerAppService {
   constructor(
     @Inject(CUSTOMER_DB_REPOSITORY)
     private readonly _customerDBRepository: CustomerDBRepository,
   ) {}
 
   async createCustomer(
-    customer: CustomerDto,
+    newCustomer: CustomerDto,
     trackingId: string,
   ): Promise<number> {
-    console.log(`create customer ${trackingId}`, customer);
-    return this._customerDBRepository.createCustomer(customer);
+    const customer = await this._customerDBRepository.getCustomerByEmail(
+      newCustomer.email,
+    );
+    if (customer) {
+      throw Error('Customer already exists');
+    }
+    console.log(`create customer ${trackingId}`, newCustomer);
+    return this._customerDBRepository.createCustomer(newCustomer);
   }
 
   async getCustomerById(id: string, trackingId: string): Promise<CustomerDto> {

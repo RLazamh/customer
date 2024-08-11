@@ -1,1 +1,1 @@
-export * from './customer-crud.service';
+export * from '../customer/customer-db.dom.service';

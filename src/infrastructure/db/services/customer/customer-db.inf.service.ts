@@ -10,7 +10,9 @@ import { DatabaseService } from '../../db.service';
 import { CustomerEntity } from '../../entities/customer/customer.entity';
 
 @Injectable()
-export class CustomerServiceDB implements OnModuleInit, CustomerDBRepository {
+export class CustomerDBInfService
+  implements OnModuleInit, CustomerDBRepository
+{
   private customerRepository: Repository<CustomerEntity>;
   constructor(private _dbService: DatabaseService) {}
 
@@ -22,6 +24,12 @@ export class CustomerServiceDB implements OnModuleInit, CustomerDBRepository {
   async getCustomerById(id: string): Promise<CustomerDto> {
     return this.customerRepository.findOne({
       where: { id },
+    });
+  }
+
+  getCustomerByEmail(email: string): Promise<CustomerDto> {
+    return this.customerRepository.findOne({
+      where: { email },
     });
   }
 

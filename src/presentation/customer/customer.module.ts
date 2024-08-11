@@ -1,18 +1,20 @@
 import { Module } from '@nestjs/common';
-import { CUSTOMER_DB_REPOSITORY } from '../../application/customer/repositories/db.repository';
-import { CustomerServiceCrud } from '../../domain/customer';
-import { CustomerServiceDB } from '../../infrastructure/db/services/customer/customer-db.service';
+import {
+  CUSTOMER_DB_REPOSITORY,
+  CustomerHandlerAppService,
+} from '../../application/customer';
 import { DatabaseModule } from '../../infrastructure/db/db.module';
+import { CustomerDBInfService } from '../../infrastructure/db/services';
 import { CustomerController } from './customer.controller';
 
 @Module({
   imports: [DatabaseModule],
   controllers: [CustomerController],
   providers: [
-    CustomerServiceCrud,
+    CustomerHandlerAppService,
     {
       provide: CUSTOMER_DB_REPOSITORY,
-      useClass: CustomerServiceDB,
+      useClass: CustomerDBInfService,
     },
   ],
 })
