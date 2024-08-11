@@ -6,7 +6,7 @@ import {
 } from '../../application/customer';
 
 @Injectable()
-export class CustomerService {
+export class CustomerServiceCrud {
   constructor(
     @Inject(CUSTOMER_DB_REPOSITORY)
     private readonly _customerDBRepository: CustomerDBRepository,

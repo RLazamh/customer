@@ -19,7 +19,7 @@ export class CustomerServiceDB implements OnModuleInit, CustomerDBRepository {
     this.customerRepository = this._dbService.getRepository(CustomerEntity);
   }
 
-  getCustomerById(id: string): Promise<CustomerDto> {
+  async getCustomerById(id: string): Promise<CustomerDto> {
     return this.customerRepository.findOne({
       where: { id },
     });
