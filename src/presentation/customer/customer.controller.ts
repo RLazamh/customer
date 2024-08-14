@@ -5,7 +5,10 @@ import {
   CustomerHandlerAppService,
   GenericResponse,
 } from '../../application/customer';
-import { handleResponse } from '../../application/utils';
+import {
+  handleResponse,
+  SUCCESSFUL_STATUS_CODE,
+} from '../../application/utils';
 
 @Controller('customer')
 export class CustomerController {
@@ -22,10 +25,7 @@ export class CustomerController {
     @Body() customer: CustomerDto,
   ): Promise<GenericResponse> {
     const trackingID = uuidv4();
-    const code = await this._customerHandler.createCustomer(
-      customer,
-      trackingID,
-    );
-    return handleResponse(code, trackingID);
+    await this._customerHandler.createCustomer(customer, trackingID);
+    return handleResponse(SUCCESSFUL_STATUS_CODE.SUCCESS_REQUEST, trackingID);
   }
 }

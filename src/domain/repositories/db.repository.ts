@@ -8,5 +8,5 @@ export interface CustomerDBRepository {
   /**
    * @returns {number} The number response is the code bussiness.
    */
-  createCustomer(customer: CustomerDto): Promise<number>;
+  createCustomer(customer: CustomerDto): Promise<void>;
 }

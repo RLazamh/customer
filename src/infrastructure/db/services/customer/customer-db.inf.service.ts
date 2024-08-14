@@ -1,7 +1,7 @@
 import { Injectable, OnModuleInit } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { CustomerDto } from '../../../../application/customer';
-import { SUCCESSFUL_STATUS_CODE } from '../../../../application/utils';
+import { ERROR_STATUS_CODE } from '../../../../application/utils';
 import { CustomerDBRepository } from '../../../../domain';
 import { configMigrate } from '../../config/db.orm';
 import { DatabaseService } from '../../db.service';
@@ -20,19 +20,30 @@ export class CustomerDBInfService
   }
 
   async getCustomerById(id: string): Promise<CustomerDto> {
-    return this.customerRepository.findOne({
-      where: { id },
-    });
+    try {
+      return this.customerRepository.findOne({
+        where: { id },
+      });
+    } catch (error) {
+      throw ERROR_STATUS_CODE.ERROR_DB;
+    }
   }
 
   getCustomerByEmail(email: string): Promise<CustomerDto> {
-    return this.customerRepository.findOne({
-      where: { email },
-    });
+    try {
+      return this.customerRepository.findOne({
+        where: { email },
+      });
+    } catch (error) {
+      throw ERROR_STATUS_CODE.ERROR_DB;
+    }
   }
 
-  async createCustomer(customer: CustomerDto): Promise<number> {
-    await this.customerRepository.save(customer);
-    return SUCCESSFUL_STATUS_CODE.CUSTOMER_CREATED;
+  async createCustomer(customer: CustomerDto): Promise<void> {
+    try {
+      await this.customerRepository.save(customer);
+    } catch (error) {
+      throw ERROR_STATUS_CODE.ERROR_DB;
+    }
   }
 }

@@ -5,7 +5,7 @@ import {
   CustomerRulesDomService,
 } from '../../domain';
 import { CustomerDto } from './dtos/customer.dto';
-import { handleErrorResponse } from '../utils/error.responses';
+import { ERROR_STATUS_CODE, handleErrorResponse } from '../utils';
 
 @Injectable()
 export class CustomerHandlerAppService {
@@ -18,17 +18,16 @@ export class CustomerHandlerAppService {
   async createCustomer(
     newCustomer: CustomerDto,
     trackingId: string,
-  ): Promise<number> {
+  ): Promise<void> {
     try {
       this._customerRules.validatePhoneNumber(newCustomer.phoneNumber);
       const customer = await this._customerDBRepository.getCustomerByEmail(
         newCustomer.email,
       );
-      // you can better this one
       if (customer) {
-        throw Error('Customer already exists');
+        throw ERROR_STATUS_CODE.CUSTOMER_ALREADY_EXISTS;
       }
-      return this._customerDBRepository.createCustomer(newCustomer);
+      this._customerDBRepository.createCustomer(newCustomer);
     } catch (errorNumber) {
       handleErrorResponse(errorNumber, trackingId);
     }

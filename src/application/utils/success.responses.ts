@@ -2,14 +2,14 @@ import { HttpStatus } from '@nestjs/common';
 import { GenericResponse } from '../customer';
 import { SUCCESSFUL_STATUS_CODE } from './status';
 
-export const MessageCode = {
-  CUSTOMER_CREATED: SUCCESSFUL_STATUS_CODE.CUSTOMER_CREATED,
+const MessageCode = {
+  CUSTOMER_CREATED: SUCCESSFUL_STATUS_CODE.SUCCESS_REQUEST,
 };
 
-export const MESSAGE_VALIDATION = {
+const MESSAGE_VALIDATION = {
   [MessageCode.CUSTOMER_CREATED]: {
     statusCode: HttpStatus.CREATED,
-    bussinessCode: SUCCESSFUL_STATUS_CODE.CUSTOMER_CREATED,
+    bussinessCode: SUCCESSFUL_STATUS_CODE.SUCCESS_REQUEST,
     message: 'Successfully customer generated trackingId: {trackingId}',
   },
 };

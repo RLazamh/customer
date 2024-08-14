@@ -1,5 +1,4 @@
 import { MigrationInterface, QueryRunner, Table } from 'typeorm';
-import { v4 as uuidv4 } from 'uuid';
 import { Gender } from '../../entities/customer/customer.entity';
 
 export class CreateCustomerTable1674485526914 implements MigrationInterface {
@@ -12,7 +11,7 @@ export class CreateCustomerTable1674485526914 implements MigrationInterface {
             name: 'id',
             type: 'varchar',
             isPrimary: true,
-            default: `'${uuidv4()}'`,
+            default: `gen_random_uuid()`,
           },
           {
             name: 'user_name',
