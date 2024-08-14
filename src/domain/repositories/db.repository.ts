@@ -1,4 +1,4 @@
-import { CustomerDto } from '../dtos/customer.dto';
+import { CustomerDto } from '../../application/customer';
 
 export const CUSTOMER_DB_REPOSITORY = 'CUSTOMER_DB_REPOSITORY';
 

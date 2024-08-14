@@ -1,10 +1,8 @@
 import { Injectable, OnModuleInit } from '@nestjs/common';
 import { Repository } from 'typeorm';
-import {
-  CustomerDBRepository,
-  CustomerDto,
-} from '../../../../application/customer';
+import { CustomerDto } from '../../../../application/customer';
 import { SUCCESSFUL_STATUS_CODE } from '../../../../application/utils';
+import { CustomerDBRepository } from '../../../../domain';
 import { configMigrate } from '../../config/db.orm';
 import { DatabaseService } from '../../db.service';
 import { CustomerEntity } from '../../entities/customer/customer.entity';

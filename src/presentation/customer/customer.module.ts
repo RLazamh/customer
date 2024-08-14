@@ -1,10 +1,8 @@
 import { Module } from '@nestjs/common';
-import {
-  CUSTOMER_DB_REPOSITORY,
-  CustomerHandlerAppService,
-} from '../../application/customer';
+import { CustomerHandlerAppService } from '../../application/customer';
 import { DatabaseModule } from '../../infrastructure/db/db.module';
 import { CustomerDBInfService } from '../../infrastructure/db/services';
+import { CUSTOMER_DB_REPOSITORY, CustomerRulesDomService } from '../../domain';
 import { CustomerController } from './customer.controller';
 
 @Module({
@@ -12,6 +10,7 @@ import { CustomerController } from './customer.controller';
   controllers: [CustomerController],
   providers: [
     CustomerHandlerAppService,
+    CustomerRulesDomService,
     {
       provide: CUSTOMER_DB_REPOSITORY,
       useClass: CustomerDBInfService,
