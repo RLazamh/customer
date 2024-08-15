@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { ERROR_STATUS_CODE } from 'src/application/utils';
+import { ERROR_STATUS_CODE } from '../..//application/utils';
 
 @Injectable()
 export class CustomerRulesDomService {
