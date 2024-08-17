@@ -16,3 +16,5 @@ export const factoryGenerateCustomer = (): CustomerDto => {
     phoneNumber: faker.phone.number(),
   };
 };
+
+export const factoryNumberNoValidate = () => `08${faker.string.numeric(8)}`;
