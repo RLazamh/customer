@@ -27,7 +27,7 @@ export class CustomerHandlerAppService {
       if (customer) {
         throw ERROR_STATUS_CODE.CUSTOMER_ALREADY_EXISTS;
       }
-      this._customerDBRepository.createCustomer(newCustomer);
+      await this._customerDBRepository.createCustomer(newCustomer);
     } catch (errorNumber) {
       handleErrorResponse(errorNumber, trackingId);
     }

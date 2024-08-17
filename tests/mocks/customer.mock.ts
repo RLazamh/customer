@@ -1,7 +1,7 @@
 import { faker } from '@faker-js/faker';
 import { CustomerDto, Gender } from '../../src/application/customer';
 
-export const mockUUIDV4 = 'mock-uuid-v4-634aaaffd9c6';
+export const mockUUIDV4 = faker.string.uuid();
 
 export const factoryGenerateCustomer = (): CustomerDto => {
   faker.seed(Math.ceil(Math.random() * Number.MAX_SAFE_INTEGER));
