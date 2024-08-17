@@ -1,6 +1,14 @@
 import { Test, TestingModule } from '@nestjs/testing';
+import {
+  handleResponse,
+  SUCCESSFUL_STATUS_CODE,
+} from '../../../../src/application/utils';
 import { CustomerController } from '../../../../src/presentation/customer/customer.controller';
 import { CustomerHandlerAppService } from '../../../../src/application/customer';
+import { factoryGenerateCustomer } from '../../../mocks/customer.mock';
+
+jest.mock('uuid', () => ({ v4: () => 'mock-uuid-v4-634aaaffd9c6' }));
+const mockUUIDV4 = 'mock-uuid-v4-634aaaffd9c6';
 
 describe('AppController (e2e)', () => {
   let controller: CustomerController;
@@ -32,9 +40,20 @@ describe('AppController (e2e)', () => {
     expect(serviceCustomerHandler).toBeDefined();
   });
 
-  it('should create customer', () => {
-    const a: any = { a: 20 };
-    controller.createCustomer(a);
-    expect(serviceCustomerHandler.createCustomer).toHaveBeenCalledTimes(1);
+  describe('CustomerController', () => {
+    it('should create customer', async () => {
+      const mockCustomer = factoryGenerateCustomer();
+      const result = await controller.createCustomer(mockCustomer);
+      expect(serviceCustomerHandler.createCustomer).toHaveBeenCalledTimes(1);
+      expect(serviceCustomerHandler.createCustomer).toHaveBeenCalledWith(
+        mockCustomer,
+        mockUUIDV4,
+      );
+      const expectedResult = handleResponse(
+        SUCCESSFUL_STATUS_CODE.SUCCESS_REQUEST,
+        mockUUIDV4,
+      );
+      expect(expectedResult).toEqual(result);
+    });
   });
 });
