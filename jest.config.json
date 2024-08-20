@@ -12,6 +12,8 @@
     "!**/tests/**"
   ],
   "coveragePathIgnorePatterns": [
-    "\\.module\\.ts$"
+    "\\.module\\.ts$",
+    "\\.entity\\.ts$",
+    "/infrastructure/db/migration/"
   ]
 }
