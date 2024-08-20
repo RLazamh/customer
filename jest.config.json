@@ -10,5 +10,8 @@
     "src/**/*.ts",
     "!**/node_modules/**",
     "!**/tests/**"
+  ],
+  "coveragePathIgnorePatterns": [
+    "\\.module\\.ts$"
   ]
 }

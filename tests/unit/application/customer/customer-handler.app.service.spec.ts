@@ -9,6 +9,10 @@ import {
   factoryGenerateCustomer,
   mockUUIDV4,
 } from '../../../mocks/customer.mock';
+import { ERROR_STATUS_CODE } from '../../../../src/application/utils';
+
+jest.mock('uuid', () => ({ v4: () => 'mock-uuid-v4-634aaaffd9c6' }));
+const mockTrackingId = 'mock-uuid-v4-634aaaffd9c6';
 
 describe('CustomerHandlerAppService (unit test)', () => {
   let service: CustomerHandlerAppService;
@@ -49,15 +53,42 @@ describe('CustomerHandlerAppService (unit test)', () => {
     expect(serviceCustomerRulesDomService).toBeDefined();
   });
   describe('createCustomer', () => {
-    it('GIVE new customer WHEN it have any error THEN it should call respository of DB', () => {
+    it('GIVE new customer WHEN customer is a new THEN it should call respository of DB', async () => {
       const mockNewCustomer = factoryGenerateCustomer();
-      service.createCustomer(mockNewCustomer, mockUUIDV4);
+      await service.createCustomer(mockNewCustomer, mockUUIDV4);
       expect(
         serviceCustomerRulesDomService.validatePhoneNumber,
       ).toHaveBeenCalledTimes(1);
       expect(
         serviceCustomerDBRepository.getCustomerByEmail,
       ).toHaveBeenCalledTimes(1);
+      expect(serviceCustomerDBRepository.createCustomer).toHaveBeenCalledTimes(
+        1,
+      );
+    });
+
+    it('GIVE data of a new customer WHEN customer is already exists THEN should return a error', async () => {
+      const mockNewCustomer: any = factoryGenerateCustomer();
+      (
+        serviceCustomerDBRepository.getCustomerByEmail as jest.Mock
+      ).mockResolvedValue(mockNewCustomer);
+      try {
+        await service.createCustomer(mockNewCustomer, mockTrackingId);
+      } catch (error) {
+        expect(error.response.businessCode).toEqual(
+          ERROR_STATUS_CODE.CUSTOMER_ALREADY_EXISTS,
+        );
+      }
+    });
+  });
+
+  describe('getCustomerById', () => {
+    it('GIVE went to information of customer WHEN get customer for Id THEN it should call respository of DB', async () => {
+      const mockCustomerId = mockUUIDV4;
+      await service.getCustomerById(mockCustomerId, mockCustomerId);
+      expect(serviceCustomerDBRepository.getCustomerById).toHaveBeenCalledTimes(
+        1,
+      );
     });
   });
 });
